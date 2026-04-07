@@ -5,29 +5,55 @@ load_dotenv()
 
 from vanna import Agent, AgentConfig
 from vanna.core.registry import ToolRegistry
+from vanna.core.user import UserResolver, User, RequestContext
 from vanna.tools import RunSqlTool, VisualizeDataTool
 from vanna.tools.agent_memory import SaveQuestionToolArgsTool, SearchSavedCorrectToolUsesTool
 from vanna.integrations.sqlite import SqliteRunner
 from vanna.integrations.local.agent_memory import DemoAgentMemory
 from vanna.integrations.google import GeminiLlmService
 
-# LLM
-llm = GeminiLlmService(api_key=os.getenv("GOOGLE_API_KEY"))
+# ✅ Custom User Resolver (required)
+class SimpleUserResolver(UserResolver):
+    def resolve_user(self, request_context: RequestContext) -> User:
+        return User(user_id="default_user")
 
-# Tools
-tool_registry = ToolRegistry()
-tool_registry.register(RunSqlTool(SqliteRunner("clinic.db")))
-tool_registry.register(VisualizeDataTool())
-tool_registry.register(SaveQuestionToolArgsTool())
-tool_registry.register(SearchSavedCorrectToolUsesTool())
+# ✅ LLM
+llm_service = GeminiLlmService(api_key=os.getenv("GOOGLE_API_KEY"))
 
-# Memory
-memory = DemoAgentMemory()
+# ✅ Tool Registry (CORRECT METHOD)
+tools = ToolRegistry()
 
-# Agent
+tools.register_local_tool(
+    RunSqlTool(sql_runner=SqliteRunner("clinic.db")),
+    access_groups=["users"]
+)
+
+tools.register_local_tool(
+    VisualizeDataTool(),
+    access_groups=["users"]
+)
+
+tools.register_local_tool(
+    SaveQuestionToolArgsTool(),
+    access_groups=["users"]
+)
+
+tools.register_local_tool(
+    SearchSavedCorrectToolUsesTool(),
+    access_groups=["users"]
+)
+
+# ✅ Memory
+agent_memory = DemoAgentMemory()
+
+# ✅ User Resolver
+user_resolver = SimpleUserResolver()
+
+# ✅ Agent
 agent = Agent(
-    config=AgentConfig(),
-    llm=llm,
-    tool_registry=tool_registry,
-    memory=memory
+    llm_service=llm_service,
+    tool_registry=tools,
+    user_resolver=user_resolver,
+    agent_memory=agent_memory,
+    config=AgentConfig()
 )
