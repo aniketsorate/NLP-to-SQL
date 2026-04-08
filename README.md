@@ -63,7 +63,9 @@ nl2sql-project/
 │
 ├── requirements.txt
 ├── README.md
-└── .env ```
+└── .env 
+
+```
 
 ## Setup
 
