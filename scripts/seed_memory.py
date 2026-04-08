@@ -1,4 +1,5 @@
-from vanna_setup import agent_memory
+from app.services.memory_service import save_memory
+
 
 pairs = [
 
@@ -63,13 +64,9 @@ pairs = [
  "SELECT patient_id, SUM(total_amount) FROM invoices GROUP BY patient_id ORDER BY 2 DESC LIMIT 5")
 ]
 
+
 for q, sql in pairs:
-    agent_memory.save_tool_usage(
-        "RunSqlTool",
-        {"sql": sql},
-        q,
-        {}
-    )
+    save_memory(q, sql)
 
 print("✅ Memory seeded")
 
