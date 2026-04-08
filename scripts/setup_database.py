@@ -2,7 +2,7 @@ import sqlite3
 import random
 from datetime import datetime, timedelta
 
-conn = sqlite3.connect("clinic.db")
+conn = sqlite3.connect("data/clinic.db")
 cursor = conn.cursor()
 
 # Drop tables if exist
