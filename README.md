@@ -27,43 +27,32 @@ The system takes a user question, generates a SQL query using an LLM, validates 
 
 ## Project Structure
 
-nl2sql-project/
-│
-├── app/
-│   ├── main.py
-│   │
-│   ├── routes/
-│   │   └── chat.py
-│   │
-│   ├── services/
-│   │   ├── llm_service.py
-│   │   ├── db_service.py
-│   │   ├── chart_service.py
-│   │   └── memory_service.py
-│   │
-│   ├── core/
-│   │   ├── config.py
-│   │   ├── cache.py
-│   │   └── rate_limiter.py
-│   │
-│   ├── utils/
-│   │   ├── sql_validator.py
-│   │   └── sql_extractor.py
-│   │
-│   └── prompts/
-│       └── prompt_builder.py
-│
-├── scripts/
-│   ├── setup_database.py
-│   ├── seed_memory.py
-│   └── auto_test.py
-│
-├── data/
-│   └── clinic.db
-│
-├── requirements.txt
-├── README.md
-└── .env
+app/
+  main.py
+  routes/
+    chat.py
+  services/
+    llm_service.py
+    db_service.py
+    chart_service.py
+    memory_service.py
+  core/
+    config.py
+    cache.py
+    rate_limiter.py
+  utils/
+    sql_validator.py
+    sql_extractor.py
+  prompts/
+    prompt_builder.py
+
+scripts/
+  setup_database.py
+  seed_memory.py
+  auto_test.py
+
+data/
+  clinic.db
 
 ## Setup
 
