@@ -1,5 +1,7 @@
 from pandas import DataFrame
-
+import io
+import base64
+import matplotlib.pyplot as plt
 from app.core.config import settings
 from langchain_openai import ChatOpenAI
 from langchain_core.output_parsers import StrOutputParser
@@ -43,6 +45,7 @@ async def prepare_df_for_llm(df):
 
 async def execute_code(code: str, df: DataFrame):
     code = code.split("```python")[1].split("```")[0]
+    code = code.replace("plt.show()", "plt.savefig('output.png')")
 
     local_vars = {"df": df}
     exec(code, {}, local_vars)
