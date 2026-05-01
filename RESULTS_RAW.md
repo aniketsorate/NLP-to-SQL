@@ -1,5 +1,7 @@
 # NL2SQL Test Results
 
+# Some queries may produce slightly different outputs depending on data distribution and prompt interpretation. The system is designed to improve over time using memory-based learning.
+
 ## Q1: How many patients do we have?
 
 **SQL:**
@@ -108,7 +110,7 @@ WHERE status = 'paid'
 **Result Sample:**
 [[0]]
 
-**Status:** PASS
+**Status:** Fail
 
 ---
 
@@ -132,7 +134,7 @@ GROUP BY
 **Result Sample:**
 [['Doctor 0', 60248.0], ['Doctor 1', 81976.0], ['Doctor 10', 88540.0], ['Doctor 11', 73362.0], ['Doctor 12', 50037.0]]
 
-**Status:** PASS
+**Status:** Pass
 
 ---
 
@@ -150,7 +152,7 @@ WHERE status = 'cancelled' AND strftime('%Y-%m', appointment_date) BETWEEN strft
 **Result Sample:**
 [[0]]
 
-**Status:** PASS
+**Status:** Fail
 
 ---
 

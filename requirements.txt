@@ -4,5 +4,11 @@ fastapi
 uvicorn[standard]
 plotly
 pandas
+matplotlib
+seaborn
 python-dotenv
 openai
+langchain
+langchain-core
+langchain-community
+langchain-openai
